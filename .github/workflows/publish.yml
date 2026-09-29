@@ -1,5 +1,5 @@
 # Publishes to npm when a GitHub release is published (tag v0.1.0 and so on), with provenance.
-# Needs the repository secret NPM_TOKEN: an npm granular token with publish rights on @picked-so.
+# No token: npm trusts this workflow (trusted publishing, set on the package's npm settings page).
 name: Publish
 on:
   release:
@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm 11.5.1 or later.
+      - run: npm install -g npm@latest
       - run: npm ci
       - run: npm test
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
