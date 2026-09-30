@@ -73,8 +73,17 @@ name you, you need the answers themselves, which is what [Picked](https://picked
 In Picked's **Analytics** page, pick **Your server** as the source of crawler data and copy the
 ingest URL it shows. It contains your
 project's key, so keep it in server code: set it as `PICKED_INGEST_URL` in your environment, or pass
-it as `endpoint`. Only requests from AI bots are sent, after the response; everything else costs one
-regex test. Sending never throws and never delays the visitor.
+it as `endpoint`. Two kinds of request are sent, after the response:
+
+- **AI bots**, by user agent: the page, the user agent, the bot's IP (for verification) and country.
+- **Visits from AI answers** (0.2+): a page view whose referrer is an AI assistant (chatgpt.com,
+  perplexity.ai, claude.ai, gemini.google.com...) or whose `utm_source` names one
+  (`utm_source=chatgpt.com`). Only the page, the user agent and the referrer's origin
+  (`https://chatgpt.com`, never the chat's URL) are sent: no IP, no cookie. Turn it off with
+  `referrals: false`.
+
+Everything else costs a regex test and a header read. Sending never throws and never delays the
+visitor.
 
 ### Next.js
 
@@ -145,6 +154,20 @@ await reportHits([
 | --- | --- | --- |
 | `endpoint` | `process.env.PICKED_INGEST_URL` | Your project's ingest URL from Picked |
 | `onError` | none | Called with the error when a send fails |
+| `referrals` | `true` | Also send page views from people who came from an AI answer |
+
+## Detect a visit from an AI answer
+
+```ts
+import { detectAiReferral } from "@picked-so/crawler-detect";
+
+detectAiReferral("https://chatgpt.com/", "");            // { key: "chatgpt", name: "ChatGPT", ... }
+detectAiReferral(null, "?utm_source=chatgpt.com");       // ChatGPT again
+detectAiReferral("https://www.google.com/", "");         // null
+```
+
+Google's AI Overviews and AI Mode send `google.com` like any search, so they can't be told apart
+from a normal Google visit. Some AI apps send no referrer at all; what you count is a floor.
 
 ## License
 

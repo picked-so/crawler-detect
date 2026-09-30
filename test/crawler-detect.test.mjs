@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { afterEach, beforeEach, test } from "node:test";
-import { AI_BOTS, detectAiBot, isAiBot, reportHits } from "../dist/index.js";
+import { AI_BOTS, detectAiBot, detectAiReferral, isAiBot, reportHits } from "../dist/index.js";
 import { aiCrawlers } from "../dist/express.js";
 import { trackAiCrawler as trackFetch } from "../dist/fetch.js";
 import { trackAiCrawler as trackNext } from "../dist/next.js";
@@ -104,4 +104,60 @@ test("Fetch API: status from the response, waitUntil when given", async () => {
   assert.equal(sent[0].body.hits[0].path, "/blog/post");
   assert.equal(sent[0].body.hits[0].ip, "54.90.207.250");
   assert.equal(await trackFetch(new Request("https://example.com/", { headers: { "user-agent": CHROME } })), false);
+});
+
+test("detects visits from AI answers by referrer or utm_source", () => {
+  assert.equal(detectAiReferral("https://chatgpt.com/")?.key, "chatgpt");
+  assert.equal(detectAiReferral("https://www.perplexity.ai/search/abc")?.key, "perplexity");
+  assert.equal(detectAiReferral(null, "?utm_source=chatgpt.com")?.key, "chatgpt");
+  assert.equal(detectAiReferral("https://www.google.com/"), null);
+  assert.equal(detectAiReferral(null, "?utm_source=newsletter"), null);
+  assert.equal(detectAiReferral("not a url"), null);
+});
+
+test("Next.js: a page view from an AI answer is sent with the referrer's origin only, no IP", async () => {
+  const waits = [];
+  const event = { waitUntil: (p) => waits.push(p) };
+  const request = (headers, pathname = "/pricing", search = "") => ({
+    method: "GET",
+    headers: new Headers({ "user-agent": CHROME, "x-forwarded-for": "81.2.69.160", ...headers }),
+    nextUrl: { host: "example.com", pathname, search },
+  });
+  trackNext(request({ referer: "https://chatgpt.com/c/private-chat-id" }), event, { endpoint: ENDPOINT });
+  trackNext(request({}, "/blog/post", "?utm_source=chatgpt.com"), event, { endpoint: ENDPOINT });
+  trackNext(request({ referer: "https://www.google.com/" }), event, { endpoint: ENDPOINT });
+  trackNext(request({ referer: "https://chatgpt.com/" }, "/_next/image.png"), event, { endpoint: ENDPOINT });
+  trackNext(request({ referer: "https://chatgpt.com/" }), event, { endpoint: ENDPOINT, referrals: false });
+  await Promise.all(waits);
+  assert.equal(sent.length, 2);
+  assert.deepEqual(
+    { ...sent[0].body.hits[0], at: 0 },
+    { at: 0, host: "example.com", path: "/pricing", userAgent: CHROME, referer: "https://chatgpt.com" },
+  );
+  assert.equal(sent[1].body.hits[0].path, "/blog/post?utm_source=chatgpt.com");
+  assert.equal(sent[1].body.hits[0].referer, null);
+});
+
+test("Express and Fetch: page views from AI answers, not assets or POSTs", async () => {
+  const res = Object.assign(new EventEmitter(), { statusCode: 200 });
+  const req = (url, referer, method = "GET") => ({
+    method,
+    hostname: "example.com",
+    originalUrl: url,
+    ip: "81.2.69.160",
+    get: (name) => ({ "user-agent": CHROME, referer })[name.toLowerCase()],
+  });
+  const middleware = aiCrawlers({ endpoint: ENDPOINT });
+  middleware(req("/pricing?utm_source=perplexity", undefined), res, () => {});
+  middleware(req("/logo.svg", "https://claude.ai/"), res, () => {});
+  middleware(req("/form", "https://claude.ai/", "POST"), res, () => {});
+  res.emit("finish");
+  await new Promise((r) => setTimeout(r, 0));
+  assert.equal(sent.length, 1);
+  assert.equal(sent[0].body.hits[0].path, "/pricing?utm_source=perplexity");
+  assert.equal(sent[0].body.hits[0].ip, undefined);
+
+  const request = new Request("https://example.com/docs", { headers: { "user-agent": CHROME, referer: "https://claude.ai/chat/x" } });
+  assert.equal(await trackFetch(request, new Response("ok"), null, { endpoint: ENDPOINT }), true);
+  assert.equal(sent[1].body.hits[0].referer, "https://claude.ai");
 });

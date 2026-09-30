@@ -1,8 +1,14 @@
-/** One request from an AI bot, as Picked's ingest endpoint takes it. */
+/**
+ * One request as Picked's ingest endpoint takes it: an AI bot's, or (with `referer`) a person's
+ * page view that came from an AI answer.
+ */
 export type CrawlerHit = {
   host?: string;
+  /** For a visit from an AI answer, with its query string, so `utm_source` can be read. */
   path: string;
   userAgent: string;
+  /** A visit from an AI answer: the referrer's origin only ("https://chatgpt.com"). */
+  referer?: string | null;
   /** The bot's IP as your server saw it. Picked checks it against the ranges the AI companies publish. */
   ip?: string | null;
   /** Two-letter country code from your CDN (cf-ipcountry, x-vercel-ip-country). */
@@ -20,6 +26,12 @@ export type ReportOptions = {
   endpoint?: string;
   /** Called when sending fails. Sending never throws. */
   onError?: (error: unknown) => void;
+  /**
+   * Also send page views from people who came from an AI answer (ChatGPT, Perplexity, Claude,
+   * Gemini...), by their referrer or utm_source: the page, the assistant's origin, the time. No IP,
+   * no cookie. Default true; false sends AI bots only.
+   */
+  referrals?: boolean;
 };
 
 function envEndpoint(): string | undefined {

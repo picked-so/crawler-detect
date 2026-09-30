@@ -1,7 +1,7 @@
 {
   "name": "@picked-so/crawler-detect",
-  "version": "0.1.0",
-  "description": "Detect AI crawlers (GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Agent and more) by user agent, and send their visits to Picked from Next.js, Express or any Fetch API server.",
+  "version": "0.2.0",
+  "description": "Detect AI crawlers (GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Agent and more) by user agent, and visits from AI answers (ChatGPT, Perplexity, Claude referrers), and send them to Picked from Next.js, Express or any Fetch API server.",
   "keywords": ["ai crawlers", "gptbot", "chatgpt-user", "claudebot", "perplexitybot", "google-agent", "gemini", "ai bots", "user agent", "nextjs", "express", "cloudflare workers", "llm seo"],
   "homepage": "https://picked.so",
   "repository": { "type": "git", "url": "git+https://github.com/picked-so/crawler-detect.git" },
