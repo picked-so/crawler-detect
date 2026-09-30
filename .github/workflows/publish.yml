@@ -15,9 +15,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
-      # Trusted publishing needs npm 11.5.1 or later.
-      - run: npm install -g npm@latest
       - run: npm ci
       - run: npm test
-      - run: npm publish
+      - run: npx npm@latest publish
