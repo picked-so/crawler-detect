@@ -8,7 +8,8 @@ See which AI crawlers read your site:
 | Anthropic (Claude) | Claude-User, Claude-SearchBot, ClaudeBot |
 | Google AI (Gemini) | Google-Agent, Google-GeminiNotebook, GoogleOther |
 | Perplexity | Perplexity-User, PerplexityBot |
-| Apple, Amazon, Meta, Mistral, DuckDuckGo, ByteDance, Common Crawl | Applebot, Amazonbot, Amzn-SearchBot, Meta's fetcher and crawler, MistralAI-User, DuckAssistBot, Bytespider, CCBot |
+| Apple, Amazon, Meta, Mistral, DuckDuckGo, ByteDance, Common Crawl, Parallel | Applebot, Amazonbot, Amzn-SearchBot, Meta's fetcher, search indexer and crawler, MistralAI-User, DuckAssistBot, Bytespider, CCBot, ShapBot, Shap-User |
+| Coding agents | Cursor, OpenCode (only when it names itself) |
 
 Google's AI Overviews and AI Mode read pages as Googlebot, so no package can single them out:
 see [What about Google's AI answers?](#what-about-googles-ai-answers).
@@ -44,7 +45,7 @@ detectAiBot("Mozilla/5.0 (Macintosh ...) Chrome/140.0 Safari/537.36");
 | --- | --- | --- |
 | `answer` | Fetched live because someone asked the assistant a question | ChatGPT-User, Claude-User, Perplexity-User |
 | `search` | Builds the index the assistant searches | OAI-SearchBot, Claude-SearchBot, PerplexityBot |
-| `agent` | An AI agent browsing the site for someone | Google-Agent |
+| `agent` | An AI agent browsing the site for someone, or a coding agent reading docs | Google-Agent, Cursor |
 | `training` | Collected to train future models | GPTBot, ClaudeBot, CCBot |
 
 `AI_BOTS` is the full list, `AI_BOTS_PATTERN` one regex for all of them, `isAiBot(ua)` a boolean.

@@ -24,6 +24,17 @@ afterEach(() => {
   globalThis.fetch = realFetch;
 });
 
+test("detects Meta's search indexer, Parallel and the coding agents", () => {
+  assert.equal(detectAiBot("meta-webindexer/1.1 (+https://developers.facebook.com/docs/sharing/webmasters/web-crawlers)")?.purpose, "search");
+  assert.equal(detectAiBot("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; ShapBot/0.1.0")?.key, "shapbot");
+  assert.equal(detectAiBot("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; Shap-User/0.1.0")?.key, "shap-user");
+  assert.equal(
+    detectAiBot("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cursor/3.7.36 Chrome/142.0.7444.265 Electron/39.8.1 Safari/537.36")?.key,
+    "cursor",
+  );
+  assert.equal(detectAiBot("opencode")?.purpose, "agent");
+});
+
 test("detects the bots by user agent", () => {
   assert.equal(detectAiBot(CHATGPT_USER)?.key, "chatgpt-user");
   assert.equal(detectAiBot("Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)")?.company, "Anthropic");

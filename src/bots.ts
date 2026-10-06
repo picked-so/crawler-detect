@@ -29,6 +29,7 @@ export const AI_BOTS: readonly AiBot[] = [
   { key: "perplexity-user", name: "Perplexity-User", company: "Perplexity", purpose: "answer", match: "Perplexity-User" },
   { key: "perplexitybot", name: "PerplexityBot", company: "Perplexity", purpose: "search", match: "PerplexityBot" },
   { key: "meta-externalfetcher", name: "Meta fetcher", company: "Meta", purpose: "answer", match: "meta-externalfetcher" },
+  { key: "meta-webindexer", name: "Meta-WebIndexer", company: "Meta", purpose: "search", match: "meta-webindexer" },
   { key: "meta-externalagent", name: "Meta crawler", company: "Meta", purpose: "training", match: "meta-externalagent" },
   { key: "mistralai-user", name: "MistralAI-User", company: "Mistral", purpose: "answer", match: "MistralAI-User" },
   { key: "duckassistbot", name: "DuckAssistBot", company: "DuckDuckGo", purpose: "answer", match: "DuckAssistBot" },
@@ -41,6 +42,13 @@ export const AI_BOTS: readonly AiBot[] = [
   { key: "googleother", name: "GoogleOther", company: "Google", purpose: "training", match: "GoogleOther" },
   { key: "bytespider", name: "Bytespider", company: "ByteDance", purpose: "training", match: "Bytespider" },
   { key: "ccbot", name: "CCBot", company: "Common Crawl", purpose: "training", match: "CCBot" },
+  // Parallel (parallel.ai/parallel-web-systems-bots): its search API's index and its live fetches.
+  { key: "shap-user", name: "Shap-User", company: "Parallel", purpose: "answer", match: "Shap-User" },
+  { key: "shapbot", name: "ShapBot", company: "Parallel", purpose: "search", match: "ShapBot" },
+  // Coding agents reading docs for a developer. OpenCode sends a plain Chrome user agent and
+  // names itself only on a retry after a block, so most of its reads aren't caught.
+  { key: "cursor", name: "Cursor", company: "Cursor", purpose: "agent", match: "Cursor/" },
+  { key: "opencode", name: "OpenCode", company: "OpenCode", purpose: "agent", match: "opencode" },
 ];
 
 const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
