@@ -1,14 +1,24 @@
+<p>
+  <a href="https://picked.so/?utm_source=npm&utm_medium=readme&utm_campaign=crawler-detect">
+    <img src="https://picked.so/brand/picked-avatar-512.png" alt="Picked" width="56" height="56">
+  </a>
+</p>
+
 # @picked-so/crawler-detect
 
-See which AI crawlers read your site:
+See which AI crawlers read your site. Made by [Picked](https://picked.so/?utm_source=npm&utm_medium=readme&utm_campaign=crawler-detect), the AI visibility tool.
+
+The bots it knows:
 
 | Company | Bots |
 | --- | --- |
 | OpenAI (ChatGPT) | ChatGPT-User, OAI-SearchBot, GPTBot |
 | Anthropic (Claude) | Claude-User, Claude-SearchBot, ClaudeBot |
-| Google AI (Gemini) | Google-Agent, Google-GeminiNotebook, GoogleOther |
+| Google AI (Gemini) | Google-Agent, Google-GeminiNotebook, Google-CloudVertexBot, GoogleOther |
 | Perplexity | Perplexity-User, PerplexityBot |
-| Apple, Amazon, Meta, Mistral, DuckDuckGo, ByteDance, Common Crawl, Parallel | Applebot, Amazonbot, Amzn-SearchBot, Meta's fetcher, search indexer and crawler, MistralAI-User, DuckAssistBot, Bytespider, CCBot, ShapBot, Shap-User |
+| Mistral | MistralAI-User, MistralAI-Index, MistralAI-Training |
+| Amazon | Amzn-User, Amzn-SearchBot, Amazonbot |
+| Apple, Meta, DuckDuckGo, You.com, ByteDance, Ai2, Common Crawl, Parallel | Applebot, Meta's fetcher, search indexer and crawler, DuckAssistBot, YouBot, Bytespider, AI2Bot, CCBot, ShapBot, Shap-User |
 | Coding agents | Cursor, OpenCode (only when it names itself) |
 
 Google's AI Overviews and AI Mode read pages as Googlebot, so no package can single them out:

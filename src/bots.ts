@@ -32,16 +32,24 @@ export const AI_BOTS: readonly AiBot[] = [
   { key: "meta-webindexer", name: "Meta-WebIndexer", company: "Meta", purpose: "search", match: "meta-webindexer" },
   { key: "meta-externalagent", name: "Meta crawler", company: "Meta", purpose: "training", match: "meta-externalagent" },
   { key: "mistralai-user", name: "MistralAI-User", company: "Mistral", purpose: "answer", match: "MistralAI-User" },
+  { key: "mistralai-index", name: "MistralAI-Index", company: "Mistral", purpose: "search", match: "MistralAI-Index" },
+  { key: "mistralai-training", name: "MistralAI-Training", company: "Mistral", purpose: "training", match: "MistralAI-Training" },
   { key: "duckassistbot", name: "DuckAssistBot", company: "DuckDuckGo", purpose: "answer", match: "DuckAssistBot" },
   { key: "applebot", name: "Applebot", company: "Apple", purpose: "search", match: "Applebot" },
+  { key: "amzn-user", name: "Amzn-User", company: "Amazon", purpose: "answer", match: "Amzn-User" },
   { key: "amzn-searchbot", name: "Amzn-SearchBot", company: "Amazon", purpose: "search", match: "Amzn-SearchBot" },
   { key: "amazonbot", name: "Amazonbot", company: "Amazon", purpose: "training", match: "Amazonbot" },
   // Google's AI answers (AI Overviews, AI Mode) read pages as Googlebot: no user agent of their own.
   { key: "google-agent", name: "Google-Agent", company: "Google", purpose: "agent", match: "Google-Agent" },
   { key: "google-gemininotebook", name: "Gemini Notebook", company: "Google", purpose: "answer", match: "Google-GeminiNotebook" },
+  // Crawls a site only when its owner asks, to build a Vertex AI agent on it.
+  { key: "google-cloudvertexbot", name: "Google-CloudVertexBot", company: "Google", purpose: "search", match: "Google-CloudVertexBot" },
   { key: "googleother", name: "GoogleOther", company: "Google", purpose: "training", match: "GoogleOther" },
   { key: "bytespider", name: "Bytespider", company: "ByteDance", purpose: "training", match: "Bytespider" },
   { key: "ccbot", name: "CCBot", company: "Common Crawl", purpose: "training", match: "CCBot" },
+  // You.com's search index (docs.you.com/youbot) and Ai2's crawler for its open models (allenai.org/crawler), checked 2026-10-12.
+  { key: "youbot", name: "YouBot", company: "You.com", purpose: "search", match: "YouBot" },
+  { key: "ai2bot", name: "AI2Bot", company: "Ai2", purpose: "training", match: "AI2Bot" },
   // Parallel (parallel.ai/parallel-web-systems-bots): its search API's index and its live fetches.
   { key: "shap-user", name: "Shap-User", company: "Parallel", purpose: "answer", match: "Shap-User" },
   { key: "shapbot", name: "ShapBot", company: "Parallel", purpose: "search", match: "ShapBot" },
