@@ -47,6 +47,10 @@ export const AI_BOTS: readonly AiBot[] = [
   { key: "googleother", name: "GoogleOther", company: "Google", purpose: "training", match: "GoogleOther" },
   { key: "bytespider", name: "Bytespider", company: "ByteDance", purpose: "training", match: "Bytespider" },
   { key: "ccbot", name: "CCBot", company: "Common Crawl", purpose: "training", match: "CCBot" },
+  // xAI's Grok: xAI publishes no crawler page; the three names bot directories agree on.
+  { key: "grok-deepsearch", name: "Grok-DeepSearch", company: "xAI", purpose: "answer", match: "Grok-DeepSearch" },
+  { key: "xai-grok", name: "xAI-Grok", company: "xAI", purpose: "search", match: "xAI-Grok" },
+  { key: "grokbot", name: "GrokBot", company: "xAI", purpose: "training", match: "GrokBot" },
   // You.com's search index (docs.you.com/youbot) and Ai2's crawler for its open models (allenai.org/crawler), checked 2026-10-12.
   { key: "youbot", name: "YouBot", company: "You.com", purpose: "search", match: "YouBot" },
   { key: "ai2bot", name: "AI2Bot", company: "Ai2", purpose: "training", match: "AI2Bot" },

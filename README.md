@@ -19,6 +19,7 @@ The bots it knows:
 | Mistral | MistralAI-User, MistralAI-Index, MistralAI-Training |
 | Amazon | Amzn-User, Amzn-SearchBot, Amazonbot |
 | Apple, Meta, DuckDuckGo, You.com, ByteDance, Ai2, Common Crawl, Parallel | Applebot, Meta's fetcher, search indexer and crawler, DuckAssistBot, YouBot, Bytespider, AI2Bot, CCBot, ShapBot, Shap-User |
+| xAI (Grok) | Grok-DeepSearch, xAI-Grok, GrokBot (xAI publishes no crawler docs: names as bot directories report them) |
 | Coding agents | Cursor, OpenCode (only when it names itself) |
 
 Google's AI Overviews and AI Mode read pages as Googlebot, so no package can single them out:
