@@ -160,6 +160,23 @@ await reportHits([
 ]);
 ```
 
+### Let your coding assistant install it (Cursor, Claude Code, Copilot, Codex)
+
+Paste this prompt to configure tracking in one step:
+
+```text
+Install and configure @picked-so/crawler-detect in this project:
+
+1. Detect the framework used (Next.js App/Pages router, Express, Hono, Cloudflare Workers, etc.) and install @picked-so/crawler-detect using the project's package manager.
+2. Wire up the AI crawler detection middleware:
+   - For Next.js 16+: call trackAiCrawler(request, event) in proxy.ts.
+   - For Next.js 13-15: call trackAiCrawler(request, event) in middleware.ts.
+   - For Express: add app.use(aiCrawlers()) before routes (with app.set("trust proxy", true) if behind a proxy).
+   - For Fetch API (Workers, Hono, Remix, Bun): call trackAiCrawler(request, response, ctx).
+3. Set PICKED_INGEST_URL=<YOUR_INGEST_URL> in .env.local (or .env).
+4. Ensure tracking is fail-open and non-blocking (runs after the response is sent) and never fails visitor requests.
+```
+
 ## Options
 
 | Option | Default | |
