@@ -59,6 +59,9 @@ export const AI_BOTS: readonly AiBot[] = [
   { key: "shapbot", name: "ShapBot", company: "Parallel", purpose: "search", match: "ShapBot" },
   // Coding agents reading docs for a developer. OpenCode sends a plain Chrome user agent and
   // names itself only on a retry after a block, so most of its reads aren't caught.
+  // Cloudflare files both under "AI Crawler".
+  { key: "petalbot", name: "PetalBot", company: "Huawei", purpose: "search", match: "PetalBot" },
+  { key: "reflectionbot", name: "Reflectionbot", company: "Reflection AI", purpose: "training", match: "Reflectionbot" },
   { key: "cursor", name: "Cursor", company: "Cursor", purpose: "agent", match: "Cursor/" },
   { key: "opencode", name: "OpenCode", company: "OpenCode", purpose: "agent", match: "opencode" },
 ];
